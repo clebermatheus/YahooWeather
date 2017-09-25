@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Yahoo Weather</string>
+    <string name="main_title_conditions">Condições atuais</string>
+</resources>
