@@ -1,18 +1,16 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.github.clebermatheus.yahooweather"
-        minSdkVersion 23
+        minSdkVersion 20
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        jackOptions{
-            enabled true
-        }
     }
     buildTypes {
         release {

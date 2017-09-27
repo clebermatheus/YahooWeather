@@ -5,8 +5,10 @@
    - Android Studio 2.3.3
    - Java 8
    - Android Build Tools 26 instalado
-   - Android 6+ (emulador/dispositivo)
-   - Android SDK 23-26 instalado
+   - Android 5+ (emulador/dispositivo)
+   - Nas configurações do dipositivo, vá em local, clique em método de localização e clique em 
+   GPS, redes Wi-fi e móveis
+   - Android SDK 20-26 instalado
    - Dispositivo com depuração USB ativado
 
 ## Como funciona o aplicativo

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.test.InstrumentationRegistry;
@@ -32,6 +33,7 @@ import static android.content.Context.LOCATION_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.location.LocationManager.NETWORK_PROVIDER;
+import static android.location.LocationManager.PASSIVE_PROVIDER;
 import static android.net.Uri.encode;
 import static com.android.volley.Request.Method.GET;
 import static com.github.clebermatheus.yahooweather.utils.Util.MAX_REQUESTS;
@@ -61,12 +63,15 @@ public class InitTest{
         assertTrue("Sem acesso as permissões de GPS", ActivityCompat.checkSelfPermission(appContext, ACCESS_FINE_LOCATION) == PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(appContext, ACCESS_COARSE_LOCATION) == PERMISSION_GRANTED);
         LocationManager manager = (LocationManager) appContext.getSystemService(LOCATION_SERVICE);
         assertTrue("Tem conexão GPS", manager.isProviderEnabled(NETWORK_PROVIDER));
-        if (ActivityCompat.checkSelfPermission(appContext, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(appContext, ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity.getActivity(), new String[]{ACCESS_FINE_LOCATION,
-                    ACCESS_COARSE_LOCATION}, 0);
-            obtemLocalizacao();
-            return;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (ActivityCompat.checkSelfPermission(appContext, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(appContext, ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity.getActivity(), new String[]{ACCESS_FINE_LOCATION,
+                        ACCESS_COARSE_LOCATION}, 0);
+                obtemLocalizacao();
+                return;
+            }
         }
+        /*
         manager.requestLocationUpdates(NETWORK_PROVIDER, 0, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location loc) {
@@ -83,6 +88,8 @@ public class InitTest{
             @Override
             public void onProviderDisabled(String s) {Log.i(TAG, s);}
         }, Looper.getMainLooper());
+        */
+        recebeDadosDoYahooWeather(manager.getLastKnownLocation(PASSIVE_PROVIDER));
     }
 
     private void recebeDadosDoYahooWeather(Location location){

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,6 @@ import com.github.clebermatheus.yahooweather.R;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-import static android.location.LocationManager.GPS_PROVIDER;
 import static android.location.LocationManager.NETWORK_PROVIDER;
 import static android.location.LocationManager.PASSIVE_PROVIDER;
 import static android.net.Uri.encode;
@@ -57,12 +57,14 @@ public class SplashScreenActivity extends AppCompatActivity {
     public void getLocation() {
         LocationManager manager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
 
-        if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 0);
-            getLocation();
-            return;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (ActivityCompat.checkSelfPermission(this, ACCESS_FINE_LOCATION) != PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, ACCESS_COARSE_LOCATION) != PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 0);
+                getLocation();
+                return;
+            }
         }
-        manager.requestLocationUpdates(NETWORK_PROVIDER, 0, 0, new LocationListener() {
+        /*manager.requestLocationUpdates(NETWORK_PROVIDER, 0, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
                 Log.d("Latitude", String.valueOf(location.getLatitude()));
@@ -80,5 +82,11 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void onProviderDisabled(String s) {Log.i(TAG, s);}
         });
+        */
+        Location location = manager.getLastKnownLocation(PASSIVE_PROVIDER);
+        Log.d("Latitude", String.valueOf(location.getLatitude()));
+        Log.d("Longitude", String.valueOf(location.getLongitude()));
+        requestQueueYahooWeather("select * from weather.forecast where woeid in (select woeid from geo.places(1) where text = '("+
+                String.valueOf(location.getLatitude()) + ", " + String.valueOf(location.getLongitude()) + ")') and u = 'c'");
     }
 }
