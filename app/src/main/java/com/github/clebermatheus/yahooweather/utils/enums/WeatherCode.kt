@@ -1,4 +1,4 @@
-package com.github.clebermatheus.yahooweather.utils.enums;
+package com.github.clebermatheus.yahooweather.utils.enums
 
 /**
  * Enum contendo todos os códigos utilizado na API.
@@ -6,7 +6,7 @@ package com.github.clebermatheus.yahooweather.utils.enums;
  * Created by clebermatheus on 9/24/17.
  */
 
-public enum WeatherCode {
+enum class WeatherCode(private val stringValue: String, val value: Int) {
     TORNADO("tornado", 0),
     TROPICAL_STORM("Tempestade tropical", 1),
     HURRICANE("Furacão", 2),
@@ -57,20 +57,12 @@ public enum WeatherCode {
     ISLOATED_THUNDERSHOWERS("trovoadas isoladas", 47),
     NOT_AVAILABE("não disponível", 32000);
 
-    private final String stringValue;
-    private final int intValue;
+    override fun toString(): String {return stringValue }
 
-    WeatherCode(String toString, int value){
-        stringValue = toString;
-        intValue = value;
+    companion object {
+        fun setValue(value: Int): WeatherCode {
+            for (code in WeatherCode.values()) {if (value == code.value) {return code}}
+            return NOT_AVAILABE
+        }
     }
-
-    public int getValue(){return intValue;}
-    public static WeatherCode setValue(int value){
-        for(WeatherCode code: WeatherCode.values()){if(value == code.getValue()){return code;}}
-        return NOT_AVAILABE;
-    }
-
-    @Override
-    public String toString() {return stringValue;}
 }

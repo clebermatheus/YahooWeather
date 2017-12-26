@@ -103,7 +103,7 @@ public class InitTest{
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(GET, url, null, response -> {
             assertNotNull("Result vazio", response);
-            SharedPreferences sharedPreferences = appContext.getSharedPreferences(PREFERENCES,
+            SharedPreferences sharedPreferences = appContext.getSharedPreferences(INSTANCE.getPREFERENCES(),
                     MODE_PRIVATE);
             assertNotNull("SharedPreferences não encontrado", sharedPreferences);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -112,7 +112,7 @@ public class InitTest{
             appContext.startActivity(new Intent(appContext, MainActivity.class));
             activity.finishActivity();
         }, Throwable::getStackTrace);
-        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(30000, MAX_REQUESTS, 1.0f));
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(30000, INSTANCE.getMAX_REQUESTS(), 1.0f));
         requestQueue.add(jsonRequest);
     }
 }

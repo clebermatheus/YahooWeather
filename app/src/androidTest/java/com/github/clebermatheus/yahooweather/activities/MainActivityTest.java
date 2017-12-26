@@ -36,7 +36,7 @@ public class MainActivityTest {
     @Test
     public void onCreate() throws Exception {
         SharedPreferences sharedPreferences = activity.getActivity().getSharedPreferences
-                (PREFERENCES, MODE_PRIVATE);
+                (INSTANCE.getPREFERENCES(), MODE_PRIVATE);
         assertNotNull("SharedPreferences nula", sharedPreferences);
         String resultJSON = sharedPreferences.getString("resultJSON", "");
         assertFalse("Result vazio", resultJSON.isEmpty());
