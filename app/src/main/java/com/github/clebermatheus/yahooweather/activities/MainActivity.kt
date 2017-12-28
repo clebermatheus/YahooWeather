@@ -7,8 +7,10 @@ import android.util.Log
 import android.widget.TextView
 import com.github.clebermatheus.yahooweather.R
 import com.github.clebermatheus.yahooweather.models.Channel
+import com.github.clebermatheus.yahooweather.models.Item
+import com.github.clebermatheus.yahooweather.models.ResultQuery
 import com.github.clebermatheus.yahooweather.utils.Util.PREFERENCES
-import org.json.JSONObject
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,21 +23,23 @@ class MainActivity : AppCompatActivity() {
         exibeClimaAtual(resultJSON)
     }
 
-    private fun exibeClimaAtual(jsonString: String) {
-        try {
-            val obj = JSONObject(jsonString)
-            val results = obj.getJSONObject("query").getJSONObject("results")
-            val channel = Channel(results.getJSONObject("channel"))
-            val item = channel.item
-            val actionBar = supportActionBar
-            val conditionToday = findViewById<TextView>(R.id.conditionToday)
-            val condition = item!!.condition
-            val location = channel.location
-            conditionToday.text = "${condition!!.temp} º${channel.units!!.temperature} em ${location!!.city} com tempo ${condition.code}."
-            if (actionBar != null) {
-                actionBar.title = channel.title
-            }
-        } catch (e: Exception) { e.printStackTrace() }
+    private fun exibeClimaAtual(json: String){
+        val actionBar = supportActionBar
+        val gson = Gson()
+        val resultado: ResultQuery = gson.fromJson(json, ResultQuery::class.java)
+        Log.d(TAG, resultado.toString())
+        val channel: Channel = resultado.query!!.results!!.channel ?: Channel()
+        val conditionToday = findViewById<TextView>(R.id.conditionToday)
+
+        // Condition Today
+        val (code, _, temp, _) = channel.item?.condition ?: Item.Condition()
+        val city = channel.location?.city ?: ""
+        val temperature = channel.units?.temperature ?: ""
+        conditionToday.text = "${temp}º${temperature} em ${city} com tempo ${code}."
+
+        if (actionBar != null) {
+            actionBar.title = title
+        }else{}
     }
 
     companion object {

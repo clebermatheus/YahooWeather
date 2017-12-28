@@ -1,12 +1,8 @@
 package com.github.clebermatheus.yahooweather.models
 
 import android.location.Location
-
 import com.github.clebermatheus.yahooweather.utils.enums.WeatherCode
-
-import org.json.JSONObject
-
-import android.location.LocationManager.GPS_PROVIDER
+import java.util.*
 
 /**
  * Classe criada para tratar o item recebido da API.
@@ -14,84 +10,64 @@ import android.location.LocationManager.GPS_PROVIDER
  * Created by clebermatheus on 9/24/17.
  */
 
-data class Item(private val json: JSONObject) {
-    var condition: Condition? = null
-        private set
-    lateinit var forecast: Array<Forecast?>
-        private set
-    var location: Location? = null
-        private set
-    var title: String? = null
-        private set
-    var link: String? = null
-        private set
-    var pubDate: String? = null
-        private set
-    var description: String? = null
-        private set
+data class Item(
+        val condition: Condition? = null,
+        val forecast: Array<Forecast?> = arrayOfNulls(1),
+        val location: Location? = null,
+        val title: String = "",
+        val link: String = "",
+        val pubDate: String = "",
+        val description: String = "",
+        val lat: Double = 0.0,
+        val long: Double = 0.0,
+        val guid: Guid? = null
+) {
+    data class Condition(
+            val code: WeatherCode = WeatherCode.NOT_AVAILABE,
+            val date: String = "",
+            val temp: Int = 0,
+            val text: String = ""
+    )
 
-    init {
-        try {
-            this.condition = Condition(json.getJSONObject("condition"))
-            val arrForecast = json.getJSONArray("forecast")
-            this.forecast = arrayOfNulls(size = arrForecast.length())
-            for (i in 0..arrForecast.length()) {
-                this.forecast[i] = Forecast(arrForecast.getJSONObject(i))
-            }
-            this.location = Location(GPS_PROVIDER)
-            this.location!!.latitude = json.getDouble("lat")
-            this.location!!.longitude = json.getDouble("long")
-            this.title = json.getString("title")
-            this.link = json.getString("link")
-            this.pubDate = json.getString("pubDate")
-            this.description = json.getString("description")
-        } catch (e: Exception) {e.printStackTrace() }
+    data class Forecast(
+            val code: WeatherCode = WeatherCode.NOT_AVAILABE,
+            val date: String = "",
+            val day: String = "",
+            val high: Int = 0,
+            val low: Int = 0,
+            val text: String = ""
+    )
+
+    data class Guid(val isPermalink: Boolean = false)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Item
+
+        if (condition != other.condition) return false
+        if (!Arrays.equals(forecast, other.forecast)) return false
+        if (location != other.location) return false
+        if (title != other.title) return false
+        if (link != other.link) return false
+        if (pubDate != other.pubDate) return false
+        if (description != other.description) return false
+
+        return true
     }
 
-    data class Condition(private val json: JSONObject) {
-        var temp: Int = 0
-            private set
-        var date: String? = null
-            private set
-        var text: String? = null
-            private set
-
-        var code: WeatherCode? = null
-            private set
-
-        init {
-            try {
-                this.code = WeatherCode.setValue(json.getInt("code"))
-                this.date = json.getString("date")
-                this.temp = json.getInt("temp")
-                this.text = json.getString("text")
-            } catch (e: Exception) {e.printStackTrace()}
-        }
-    }
-
-    data class Forecast(private val json: JSONObject) {
-        var high: Int = 0
-            private set
-        var low: Int = 0
-            private set
-        var date: String? = null
-            private set
-        var day: String? = null
-            private set
-        var text: String? = null
-            private set
-        var code: WeatherCode? = null
-            private set
-
-        init {
-            try {
-                this.code = WeatherCode.setValue(json.getInt("code"))
-                this.date = json.getString("date")
-                this.day = json.getString("day")
-                this.high = json.getInt("high")
-                this.low = json.getInt("low")
-                this.text = json.getString("text")
-            } catch (e: Exception) {e.printStackTrace()}
-        }
+    override fun hashCode(): Int {
+        var result = condition?.hashCode() ?: 0
+        result = 31 * result + Arrays.hashCode(forecast)
+        result = 31 * result + (location?.hashCode() ?: 0)
+        result = 31 * result + title.hashCode()
+        result = 31 * result + link.hashCode()
+        result = 31 * result + pubDate.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + lat.hashCode()
+        result = 31 * result + long.hashCode()
+        result = 31 * result + (guid?.hashCode() ?: 0)
+        return result
     }
 }
