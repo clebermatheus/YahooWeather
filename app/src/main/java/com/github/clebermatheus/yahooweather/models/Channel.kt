@@ -7,58 +7,58 @@ package com.github.clebermatheus.yahooweather.models
  */
 
 data class Channel(
-        var atmosphere: Atmosphere? = null,
-        var astronomy: Astronomy? = null,
-        var image: Image? = null,
-        var item: Item? = null,
-        var location: Location? = null,
-        var title: String = "",
-        var link: String = "",
-        var language: String = "",
-        var description: String = "",
-        var lastBuildDate: String = "",
-        var ttl: Int = 0,
-        var units: Units? = null,
-        var wind: Wind? = null
+        val atmosphere: Atmosphere? = null,
+        val astronomy: Astronomy? = null,
+        val image: Image? = null,
+        val item: Item? = null,
+        val location: Location? = null,
+        val title: String = "",
+        val link: String = "",
+        val language: String = "",
+        val description: String = "",
+        val lastBuildDate: String = "",
+        val ttl: Int = 0,
+        val units: Units? = null,
+        val wind: Wind? = null
 ) {
     data class Atmosphere(
-            var humidity: Int = 0,
-            var visibility: Double = 0.0,
-            var pressure: Double = 0.0,
-            var rising: Int = 0
+            val humidity: Int = 0,
+            val visibility: Double = 0.0,
+            val pressure: Double = 0.0,
+            val rising: Int = 0
     )
 
     data class Astronomy(
-            var sunrise: String = "",
-            var sunset: String = ""
+            val sunrise: String = "",
+            val sunset: String = ""
     )
 
     data class Image(
-            var title: String = "",
-            var link: String = "",
-            var url: String = "",
-            var width: Int = 0,
-            var height: Int = 0
+            val title: String = "",
+            val link: String = "",
+            val url: String = "",
+            val width: Int = 0,
+            val height: Int = 0
     )
 
     data class Location(
-            var city: String = "",
-            var region: String = "",
-            var country: String = ""
+            val city: String = "",
+            val region: String = "",
+            val country: String = ""
     ) {
-        override fun toString(): String {return "$city/$region - $country" }
+        override fun toString(): String = "$city/$region - $country"
     }
 
     data class Units(
-            var distance: String = "",
-            var pressure: String = "",
-            var speed: String = "",
-            var temperature: String = ""
+            val distance: String,
+            val pressure: String,
+            val speed: String,
+            val temperature: String
     )
 
     data class Wind(
-            var chill: Int = 0,
-            var direction: Int = 0,
-            var speed: Double = 0.0
+            val chill: Int = 0,
+            val direction: Int = 0,
+            val speed: Double = 0.0
     )
 }

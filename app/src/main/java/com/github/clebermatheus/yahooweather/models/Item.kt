@@ -23,7 +23,7 @@ data class Item(
         val guid: Guid? = null
 ) {
     data class Condition(
-            val code: WeatherCode = WeatherCode.NOT_AVAILABE,
+            val code: Int = 0,
             val date: String = "",
             val temp: Int = 0,
             val text: String = ""
