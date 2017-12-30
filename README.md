@@ -1,4 +1,4 @@
-# Yahoo Weather Android App [![Build Status](https://travis-ci.org/clebermatheus/YahooWeather.svg?branch=master)](https://travis-ci.org/clebermatheus/YahooWeather)
+# Yahoo Weather Android App [![Build Status](https://travis-ci.org/clebermatheus/YahooWeather.svg?branch=develop)](https://travis-ci.org/clebermatheus/YahooWeather) [![CircleCI](https://circleci.com/gh/clebermatheus/YahooWeather/tree/develop.svg?style=svg)](https://circleci.com/gh/clebermatheus/YahooWeather/tree/develop)
 
 ## Requisitos para a execução do aplicativo
     
