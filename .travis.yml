@@ -4,13 +4,20 @@ sudo: false
 
 android:
   components:
-    - platform-tools
-    - tools
-    - build-tools-26.0.1
-    - android-23
-    - android-26
-    - sys-img-armeabi-v7a-android-23
-    - extra-android-m2repository
+      - platform-tools
+      - tools
+      - build-tools-27.0.3
+      - android-23
+      - android-27
+      - sys-img-armeabi-v7a-android-23
+      - extra-android-m2repository
+      - extra-google-google_play_services
+      - extra-google-m2repository
+      - extra-android-support
+  licenses:
+      - 'android-sdk-preview-license-52d11cd2'
+      - 'android-sdk-license-.+'
+      - 'google-gdk-license-.+'
 
 before_script:
   # Create and start emulator
