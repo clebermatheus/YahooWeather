@@ -10,6 +10,7 @@ import com.github.clebermatheus.yahooweather.models.Channel
 import com.github.clebermatheus.yahooweather.models.Item
 import com.github.clebermatheus.yahooweather.models.ResultQuery
 import com.github.clebermatheus.yahooweather.utils.Util.PREFERENCES
+import com.github.clebermatheus.yahooweather.utils.Util.getWeatherCode
 import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
@@ -35,10 +36,10 @@ class MainActivity : AppCompatActivity() {
         val (code, _, temp, _) = channel.item?.condition ?: Item.Condition()
         val city = channel.location?.city ?: ""
         val temperature = channel.units?.temperature ?: ""
-        conditionToday.text = "${temp}º${temperature} em ${city} com tempo ${code}."
+        conditionToday.text = "${temp}º${temperature} em ${city} com tempo ${code.getWeatherCode()}."
 
         if (actionBar != null) {
-            actionBar.title = title
+            actionBar.title = channel.title
         }else{}
     }
 

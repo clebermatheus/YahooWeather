@@ -57,11 +57,11 @@ enum class WeatherCode(private val stringValue: String, val value: Int) {
     ISLOATED_THUNDERSHOWERS("trovoadas isoladas", 47),
     NOT_AVAILABE("não disponível", 32000);
 
-    override fun toString(): String {return stringValue }
+    override fun toString(): String = stringValue
 
     companion object {
         fun setValue(value: Int): WeatherCode {
-            for (code in WeatherCode.values()) {if (value == code.value) {return code}}
+            for (code in WeatherCode.values()) if (value == code.value) {return code}
             return NOT_AVAILABE
         }
     }
