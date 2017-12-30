@@ -15,6 +15,7 @@ dependencies:
     - /usr/local/android-sdk-linux/extras/android/m2repository
 jobs:
   build:
+    working_directory: ~/code
     docker:
       - image: circleci/android:api-27-alpha
     environment:
