@@ -1,14 +1,14 @@
-# Yahoo Weather Android App
+# Yahoo Weather Android App [![Build Status](https://travis-ci.org/clebermatheus/YahooWeather.svg?branch=master)](https://travis-ci.org/clebermatheus/YahooWeather)
 
 ## Requisitos para a execução do aplicativo
     
-   - Android Studio 2.3.3
+   - Android Studio 3.0.1
    - Java 8
-   - Android Build Tools 26 instalado
+   - Android Build Tools 27 instalado
    - Android 5+ (emulador/dispositivo)
    - Nas configurações do dipositivo, vá em local, clique em método de localização e clique em 
    GPS, redes Wi-fi e móveis
-   - Android SDK 20-26 instalado
+   - Android SDK 20-27 instalado
    - Dispositivo com depuração USB ativado
 
 ## Como funciona o aplicativo
