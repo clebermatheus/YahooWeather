@@ -18,8 +18,12 @@ android:
 
 env:
   matrix:
-    - ANDROID_TARGET=android-25
-    - ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-20 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-21 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-22 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-24 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-25 ANDROID_ABI=armeabi-v7a
 
 before_script:
   # Create and start emulator
