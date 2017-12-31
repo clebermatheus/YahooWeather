@@ -7,13 +7,10 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-27-alpha
+      - image: circleci/android:api-26-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
-      - run:
-          name: Aceitando licenças...
-          command: sdkmanager --licenses && sdkmanager --update
       - checkout
       - restore_cache:
           keys: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
