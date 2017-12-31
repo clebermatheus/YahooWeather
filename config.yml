@@ -15,11 +15,12 @@ jobs:
       - restore_cache:
           keys: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
+          name: Aceitando licenças...
+          command: sdkmanager --licenses
+      - run: sdkmanager --update
+      - run:
           name: Baixando dependências...
           command: ./gradlew androidDependencies
-      - run:
-          name: Aceitando licenças...
-          command: sdkmanager --licenses && sdkmanager --update
       - save_cache:
           paths:
             - ~/.gradle
